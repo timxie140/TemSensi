@@ -1,0 +1,17 @@
+.PHONY: build
+
+GIT_SHA := $(shell git rev-parse HEAD)
+
+build:
+	docker build .			\
+	-t temsensi:latest
+
+build-with-hash:
+	docker build . 			\
+	-t temsensi:$(GIT_SHA) 	\
+	-t temsensi:latest
+
+run:
+	docker run -it			\
+	--name temsensi			\
+	temsensi:latest
