@@ -22,7 +22,7 @@ cd TemSensi
 make build
 ```
 
-*Linux
+* Linux
 Get the package using the below command
 ```
 wget https://go.dev/dl/go1.20.5.linux-amd64.tar.gz
