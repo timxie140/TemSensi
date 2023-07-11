@@ -12,6 +12,8 @@ build-with-hash:
 	-t temsensi:latest
 
 run:
-	docker run -it			\
+	docker run -it 		    \
 	--name temsensi			\
+	--rm 					\
+	-p 5001:5001			\
 	temsensi:latest

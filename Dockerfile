@@ -20,4 +20,4 @@ COPY . .
 
 # RUN ${MAKE}
 
-CMD [ "go", "run", "test.go" ]
+CMD [ "go", "run", "api\heater\mimic_heater.go" ]
