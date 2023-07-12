@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Mogra&display=swap" rel="stylesheet">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Mogra&display=swap');
+            body{
+                background-image:url("./pic/background1.jpg");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+                overflow-x: hidden;
+            }
+            h1{
+                text-align:center;
+                font-family:"Mogra",cursive;
+                font-size: 500%;
+            }
+            #resume:link,#resume:visited{
+                color:white;
+                text-decoration: none;
+            }
+            #resume:hover{
+                color:rgb(249, 10, 185);
+            }
+            .flex-container{
+                border-left: 1px solid white;
+                margin-top: 100px;
+                float:right;
+                display: flex;
+                flex-direction: column;
+                width:15%;
+                left:100%;
+                justify-content: space-between;
+                position:absolute;
+            }
+            .flex-container > div{
+                align-self: center;
+                height: 70px;
+                color:aliceblue;
+            }
+            .file:link,.file:visited{
+                color:white;
+                text-decoration: none;
+            }
+        </style>
+        <link rel="icon" type="image/png" href="./pic/beads.png">
+        <title>
+            BIJUN's Website
+        </title>
+    </head>
+    <body>
+        <a href="main.html"><img src="./pic/sun.png" alt="Day Mode" style="width:55px; height:55px; margin:25px;"></a>
+        <img id = "pic" src="./pic/folder.png" alt="folder" style="width:50px; height:50px; float:right; margin:20px;" onclick="myMove()" onmouseover="over()" onmouseout="out()">
+        <div class="flex-container">
+            <div>
+                <img src="./pic/html.png" alt="html" style="width:25px; height:25px;"> 
+                <a class="file" href="./ITWS/Lab1.html" target="_blank">Lab1.html</a>
+            </div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+        </div>
+        <h1 style="margin-top:15%;"><a id="resume" href="resume.html"  title="email:wub8@rpi.edu, click to view personal information" target="_blank">Bijun Wu</a></h1>
+        <script>
+            var c = false;
+            function over(){
+                const e=document.getElementById("pic");
+                if(c==true){
+                    e.src="./pic/arrow-left.png";
+                }else{
+                    e.src="./pic/open-folder.png";
+                }
+            }
+            function out(){
+                const e=document.getElementById("pic");
+                if(c==true){
+                    e.src="./pic/arrow-left.png";
+                }else{
+                    e.src="./pic/folder.png";
+                }
+            }
+            
+            function myMove() {
+                console.log(c);
+                let id = null;
+                const elem = document.getElementsByClassName("flex-container")[0];  
+                let pos = 0;
+                if(c==false){
+                    document.body.style.backgroundImage = "url('./pic/background1_blur.jpg')";
+                    pos=100;
+                }else{
+                    document.body.style.backgroundImage = "url('./pic/background1.jpg')";
+                    pos=80;
+                }
+                
+                clearInterval(id);
+                id = setInterval(frame, 5);
+                function frame() {
+                    if(c == false){
+                        if (pos == 80) {
+                            c = true;
+                            clearInterval(id);
+                            const e=document.getElementById("pic");
+                            e.src="./pic/arrow-left.png"
+                            //e.onmouseover=over1(e);
+                            //e.onmouseout=out1(e);
+                        } else {
+                            pos--; 
+                            elem.style.left = pos + "%"; 
+                        }
+                    }
+                    else{
+                        if (pos == 100) {
+                            clearInterval(id);
+                            c = false;
+                            const e=document.getElementById("pic");
+                            e.src="./pic/folder.png"//
+                            //e.onmouseover=over2(e);
+                            //e.onmouseout=out2(e);
+                        } else {
+                            pos++; 
+                            elem.style.left = pos + "%"; 
+                        }
+                    }
+                }
+                console.log(c);
+                
+            }
+        </script>
+    </body>
+</html>
