@@ -1,0 +1,120 @@
+<!-- File: index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Home Control</title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f0f0;
+      }
+
+      .container {
+          max-width: 400px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #fff;
+          border-radius: 4px;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+          text-align: center;
+          color: #333;
+      }
+
+      .form-group {
+          margin-bottom: 20px;
+      }
+
+      .form-group label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+          color: #555;
+      }
+
+      .form-group input[type="text"],
+      .form-group input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
+
+      button {
+          width: 100%;
+          padding: 10px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+      }
+
+      button:hover {
+          background-color: #0056b3;
+      }
+  </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Home Control</h1>
+
+        <div id="loginSection">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div id="controlSection" style="display: none;">
+            <!-- Place your device control options here -->
+            <h2>Commands</h2>
+            <button id="commandButton" onclick="sendCommand()">Execute Command</button>
+
+            <h2>Get Value</h2>
+            <button id="getValueButton" onclick="getValue()">Get Value</button>
+            <p id="valueResult"></p>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            // Retrieve the username and password
+            var username = $('#username').val();
+            var password = $('#password').val();
+
+            // Send the login data to the server for storage
+            $.ajax({
+                url: 'store_user.php', // PHP file for storing user information
+                type: 'POST',
+                data: {
+                    username: username,
+                    password: password
+                },
+                dataType: 'html',
+                success: function (response) {
+                    alert(response);
+                    $('#loginSection').hide();
+                    $('#controlSection').show();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error storing user information:', error);
+                }
+            });
+        }
+
+        // Device control functions omitted for brevity
+    </script>
+</body>
+</html>
