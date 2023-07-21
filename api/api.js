@@ -54,18 +54,32 @@ app.post('/sensor/temperature', (req, res) => {
     });
 });
 
-app.delete('/sensor/temperature', (req, res) => {
-    let delSensor = new TempSensor(req.body.id || '', req.body.room || '', req.body.temperature || 0);
-    sensorList = sensorList.filter(sensor => sensor.id !== delSensor.id);
-    console.log(`Deleting sensor ${delSensor.id}`);
-    res.send(`Sensor ${delSensor.id} deleted\n`);
+app.delete('/sensor/temperature/:id', (req, res) => {
+    let idToDelete = req.params.id;
+
+    if (!sensorList.find(sensor => sensor.id === idToDelete)) {
+        console.log(`Sensor ${idToDelete} not found.`);
+        res.status(404).send('Sensor not found');
+        return;
+    }
+
+    sensorList = sensorList.filter(sensor => sensor.id !== idToDelete);
+    console.log(`Deleting sensor ${idToDelete}`);
+    fs.writeFile('sensors.json', JSON.stringify(sensorList), (err) => {
+        if(err) {
+            console.error('An error occurred while writing the updated list to the file:', err);
+            res.status(500).send('An error occurred while deleting the sensor');
+            return;
+        }
+        res.send(`Sensor ${idToDelete} deleted\n`);
+    });
 });
 
 app.get('/sensor/temperature/:id', (req, res) => {
     let sensorId = req.params.id;
     let sensor = sensorList.find(sensor => sensor.id === sensorId);
     if (sensor) {
-        res.send(`${sensor.temperature}`);
+        res.send(`${sensor.temperature}, ${sensor.room}`);
     } 
     else {
         res.status(404).send('Sensor not found');
@@ -74,6 +88,9 @@ app.get('/sensor/temperature/:id', (req, res) => {
 
 app.get('/sensor/temperature', (req, res) => {
     let response = sensorList.map(sensor => `Sensor: ${sensor.id}, Location: ${sensor.room}, Temperature: ${sensor.temperature}`).join('\n');
+    if (response === '') {
+        response = 'No sensors added yet';
+    }
     res.send(response);
 });
 
