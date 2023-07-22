@@ -114,7 +114,32 @@
             });
         }
 
-        // Device control functions omitted for brevity
+        function sendCommand() {
+            // Retrieve the command to be sent
+            var command = "turnOn"; // For example, "turnOn", "turnOff", "setTemperature", etc.
+    
+            // Send the command to the smart home device using fetch API
+            fetch('https://api.smart-home-device.com/command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ command: command })
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                // Handle the response from the device, if needed
+                console.log('Command sent successfully:', data);
+            })
+            .catch(function(error) {
+                console.error('Error sending command:', error);
+            });
+        }
     </script>
 </body>
 </html>
