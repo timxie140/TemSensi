@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vertical Dashboard</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Main container */
+    .dashboard-container {
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: #333;
+      color: #fff;
+      width: 200px;
+      height: 100vh; /* Full height of the viewport */
+      padding: 20px;
+      position: fixed; /* To keep the sidebar fixed on the left side */
+    }
+
+    /* Sidebar link styles */
+    .sidebar a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 10px;
+      padding: 10px;
+      transition: background-color 0.3s ease; /* Adding transition effect */
+    }
+
+    /* Hover effect for sidebar links */
+    .sidebar a:hover {
+      background-color: #555;
+    }
+
+    /* Content area */
+    .content {
+      flex: 1;
+      padding: 20px;
+      margin-left: 220px; /* To create space for the sidebar */
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="active">Home</a>
+      <a href="#">Devices</a>
+    </div>
+
+    <!-- Content area -->
+    <div class="content">
+      <h1>Welcome to the Dashboard</h1>
+      <p>This is the main content area where the dashboard content will be displayed.</p>
+    </div>
+  </div>
+</body>
+</html>
