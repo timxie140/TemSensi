@@ -46,21 +46,47 @@
       padding: 20px;
       margin-left: 220px; /* To create space for the sidebar */
     }
+
+    /* Hidden content divs */
+    .hidden-content {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="dashboard-container">
     <!-- Sidebar -->
     <div class="sidebar">
-      <a href="#" class="active">Home</a>
-      <a href="#">Devices</a>
+      <a href="#" class="active" onclick="showContent('home')">Home</a>
+      <a href="#" onclick="showContent('devices')">Devices</a>
     </div>
 
     <!-- Content area -->
     <div class="content">
-      <h1>Welcome to the Dashboard</h1>
-      <p>This is the main content area where the dashboard content will be displayed.</p>
+      <div id="homeContent" class="hidden-content">
+        <h1>Welcome to the Home Page</h1>
+        <p>This is the home page content.</p>
+      </div>
+      <div id="devicesContent" class="hidden-content">
+        <h1>Devices</h1>
+        <p>This is the devices page content.</p>
+      </div>
     </div>
+
+    <script>
+      // Function to show the corresponding content based on button click
+      function showContent(contentType) {
+        // Hide all content divs
+        const contentDivs = document.querySelectorAll('.hidden-content');
+        contentDivs.forEach(div => {
+          div.style.display = 'none';
+        });
+
+        // Show the selected content div
+        const selectedContent = document.getElementById(contentType + 'Content');
+        selectedContent.style.display = 'block';
+      }
+    </script>
   </div>
 </body>
 </html>
