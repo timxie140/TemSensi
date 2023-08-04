@@ -74,6 +74,21 @@
       background-color: #555;
       color: #fff;
     }
+
+    /* Board */
+    .board {
+      border: 1px solid #ccc;
+      padding: 20px;
+      display: none;
+      width: calc(100% - 40px);
+      margin: 10px;
+    }
+
+    /* Highlight the selected category */
+    .category-bar a.active {
+      background-color: gray;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -125,9 +140,19 @@
           div.style.display = 'none';
         });
 
+        // Deactivate all category links
+        const categoryLinks = document.querySelectorAll('.category-bar a');
+        categoryLinks.forEach(link => {
+          link.classList.remove('active');
+        });
+
         // Show the selected content div
         const selectedContent = document.getElementById(contentType + 'Content');
         selectedContent.style.display = 'block';
+
+        // Highlight the selected category link
+        const selectedCategoryLink = document.querySelector(`.category-bar a[href="#"][onclick="showContent('${contentType}')"]`);
+        selectedCategoryLink.classList.add('active');
       }
       document.getElementById('homeContent').style.display = 'block';
     </script>
