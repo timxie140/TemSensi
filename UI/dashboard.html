@@ -51,6 +51,29 @@
     .hidden-content {
       display: none;
     }
+
+    /* Category bar */
+    .category-bar {
+      display: flex;
+      justify-content: space-around;
+      background-color: #ddd;
+      padding: 10px 0;
+    }
+
+    /* Category bar link styles */
+    .category-bar a {
+      display: inline-block;
+      color: #333;
+      text-decoration: none;
+      padding: 8px 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Hover effect for category bar links */
+    .category-bar a:hover {
+      background-color: #555;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -69,7 +92,24 @@
       </div>
       <div id="devicesContent" class="hidden-content">
         <h1>Devices</h1>
-        <p>This is the devices page content.</p>
+        <p>Select a category:</p>
+        <div class="category-bar">
+          <a href="#" onclick="showContent('bathroom')">Bathroom</a>
+          <a href="#" onclick="showContent('water')">Water</a>
+          <a href="#" onclick="showContent('airConditioner')">Air Conditioner</a>
+        </div>
+      </div>
+      <div id="bathroomContent" class="hidden-content">
+        <h1>Bathroom</h1>
+        <p>This is the bathroom category content.</p>
+      </div>
+      <div id="waterContent" class="hidden-content">
+        <h1>Water</h1>
+        <p>This is the water category content.</p>
+      </div>
+      <div id="airConditionerContent" class="hidden-content">
+        <h1>Air Conditioner</h1>
+        <p>This is the air conditioner category content.</p>
       </div>
     </div>
 
