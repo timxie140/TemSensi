@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sensor Data Test Cases</title>
+</head>
+<body>
+    <h1>Test Cases Results</h1>
+    <div id="test-case-results"></div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<script>
+    const testCaseResultsDiv = document.getElementById('test-case-results');
+
+    function displayResult(result) {
+        const resultDiv = document.createElement('div');
+        resultDiv.innerHTML = `<strong>Test Case:</strong> ${result.testCase}<br><strong>Response:</strong> ${result.response}`;
+        testCaseResultsDiv.appendChild(resultDiv);
+    }
+    
+    function runTestCases() {
+        // Test case 1: Get all sensors' temperature and room
+        fetch('http://172.27.165.245:5001/sensor/temperature')
+            .then(response => response.json())
+            .then(data => {
+                displayResult({ testCase: 'Get all sensors\' temperature and room', response: JSON.stringify(data) });
+            })
+            .catch(error => {
+                displayResult({ testCase: 'Get all sensors\' temperature and room', response: error.message });
+            });
+    
+        // Test case 2: Get a specific sensor's temperature and room
+        fetch('http://172.27.165.245:5001/sensor/temperature/sensor1')
+            .then(response => response.json())
+            .then(data => {
+                displayResult({ testCase: 'Get specific sensor\'s temperature and room', response: JSON.stringify(data) });
+            })
+            .catch(error => {
+                displayResult({ testCase: 'Get specific sensor\'s temperature and room', response: error.message });
+            });
+    
+        // Test case 3: Add a new sensor
+        fetch('http://172.27.165.245:5001/sensor/temperature', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "id": "sensor3", "room": "kitchen", "temperature": 30 })
+        })
+            .then(response => response.text())
+            .then(data => {
+                displayResult({ testCase: 'Add new sensor', response: data });
+            })
+            .catch(error => {
+                displayResult({ testCase: 'Add new sensor', response: error.message });
+            });
+    
+        // Test case 4: Delete a sensor
+        fetch('http://172.27.165.245:5001/sensor/temperature/sensor2', {
+            method: 'DELETE'
+        })
+            .then(response => response.text())
+            .then(data => {
+                displayResult({ testCase: 'Delete a sensor', response: data });
+            })
+            .catch(error => {
+                displayResult({ testCase: 'Delete a sensor', response: error.message });
+            });
+    
+        // Test case 5: Attempt to get a deleted sensor
+        fetch('http://172.27.165.245:5001/sensor/temperature/sensor2')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Sensor not found');
+                }
+            })
+            .then(data => {
+                displayResult({ testCase: 'Get a deleted sensor', response: JSON.stringify(data) });
+            })
+            .catch(error => {
+                displayResult({ testCase: 'Get a deleted sensor', response: error.message });
+            });
+    }
+    
+    runTestCases();    
+
+</script>
