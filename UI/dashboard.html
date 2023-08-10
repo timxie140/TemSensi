@@ -216,7 +216,7 @@
             <p>Current Room Temperature: <span id="actualtemp">75</span></p>
           </div>
           <div class="temperature-box" id="temperatureBox">
-            Outdoor Temperature: <span id="trecommendedTemperature">96.8</span>°F
+            Outdoor Temperature: <span id="outdoorTemp">75.6</span>°F
           </div>
           <div class="temperature-box" id="temperatureBox">
             Recommended Room Temperature: <span id="arecommendedTemperature">76</span>°F
@@ -326,6 +326,20 @@
       let currentAirTemp = 75;
       let temperatureUpdateInterval = null; // Initialize an interval variable
 
+      const outdoorTempDisplay = document.getElementById("outdoorTemp");
+      let currentOutdoorTemp = 75.6; // Initial value for the outdoor temperature
+
+      function updateOutdoorTemperature() {
+        const maxChange = 0.2; // Maximum change in temperature
+        const randomChange = (Math.random() - 0.5) * maxChange * 2; // Generates a random change within the specified range
+        currentOutdoorTemp += randomChange;
+        outdoorTempDisplay.textContent = currentOutdoorTemp.toFixed(1); // Display the temperature with one decimal point
+      }
+
+      // Call the function to start updating the outdoor temperature at an interval
+      setInterval(updateOutdoorTemperature, 7000); // Change the temperature every 5 seconds
+
+
       function updateAirConditionerTemperature(targetTemp) {
         if (temperatureUpdateInterval) {
           clearInterval(temperatureUpdateInterval);
@@ -338,7 +352,7 @@
             clearInterval(temperatureUpdateInterval);
             temperatureUpdateInterval = null;
           }
-        }, 800);
+        }, 2000);
       }
 
       slider.addEventListener("input", () => {
