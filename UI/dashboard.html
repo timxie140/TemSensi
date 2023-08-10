@@ -199,13 +199,26 @@
         <div id = "temperature">
           <div class="slider-container">
             <input type="range" class="slider" min="-15" max="115" value="50" id="slider">
-            <p>Room Temperature: <span id="sliderValue">50</span></p>
+            <p>Room Temperature: <span id="sliderValue">73</span></p>
           </div>
           <div class="temperature-box" id="temperatureBox">
-            Recommended Bath Water Temperature: <span id="recommendedTemperature">35</span>°C
+            Recommended Bath Water Temperature: <span id="recommendedTemperature">96.8</span>°F
           </div>
         </div>
+
+        <div id = "Air">
+          <div class="slider-container">
+            <input type="range" class="slider" min="-15" max="115" value="50" id="slider">
+            <p>Current Room Temperature: <span id="sliderValue">73</span></p>
+          </div>
+          <div class="temperature-box" id="temperatureBox">
+            Recommended Room Temperature: <span id="recommendedTemperature">35</span>°F
+          </div>
+        </div>
+
       </div>
+
+      
       <!-- <div id="bathroomContent" class="hidden-content">
         <h1>Bathroom</h1>
       </div>
@@ -242,11 +255,16 @@
 
       }
       $("#temperature").slideUp();
+      $("#Air").slideUp();
+      $("#device_table").slideUp();
       document.getElementById('homeContent').style.display = 'block';
+
       var bathroom_show = false;
       var heater_show = false;
+      var ac_show = false;
       $("#bathroom").click(() => {
         heater_show = false;
+        ac_show = false;
         if (bathroom_show) {
           $("#device_table").slideUp();
           bathroom_show = false;
@@ -258,12 +276,25 @@
 
       $("#heater").click(() => {
         bathroom_show = false;
+        ac_show = false;
         if (heater_show) {
           $("#temperature").slideUp();
           heater_show = false;
         } else {
           $("#temperature").slideDown();
           heater_show = true;
+        }
+      }),
+
+      $("#ac").click(() => {
+        bathroom_show = false;
+        heater_show = false;
+        if (ac_show) {
+          $("#Air").slideUp();
+          ac_show = false;
+        } else {
+          $("#Air").slideDown();
+          ac_show = true;
         }
       })
 
