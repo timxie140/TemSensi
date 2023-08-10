@@ -336,7 +336,7 @@
                 Current Room Temperature: <span id="currentRoomTemp">75</span>°F
               </div>
               <div class="temperature-box" id="temperatureBox">
-                Recommended Bath Water Temperature: <span id="trecommendedTemperature">96.8</span>°F
+                Recommended Bath Water Temperature: <span id="trecommendedTemperature">90</span>°F
               </div>
             </div>
           </div>
@@ -509,12 +509,12 @@
 
       slider.addEventListener("input", () => {
         sliderValueDisplay.textContent = slider.value;
-        recommendedTemperatureDisplay.textContent = aslider.value;
       });
 
       aslider.addEventListener("input", () => {
         asliderValueDisplay.textContent = aslider.value;
         updateHeaterCurrentTemperature(aslider.value);
+        recommendedTemperatureDisplay.textContent = temcalculateTemperature(currentAirTemp)
       });
 
       aslider.addEventListener("change", () => {
@@ -531,16 +531,6 @@
         }
         
       }
-
-      function aircalculateTemperature(value) {
-        if(value < 50){
-          return 100;
-        }else{
-          return Math.round(-0.4615 * value + 123);
-        }
-        
-      }
-
     </script>
   </div>
 </body>
