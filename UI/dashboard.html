@@ -198,21 +198,28 @@
 
         <div id = "temperature">
           <div class="slider-container">
-            <input type="range" class="slider" min="-15" max="115" value="50" id="slider">
-            <p>Room Temperature: <span id="sliderValue">73</span></p>
+            <input type="range" class="slider" min="-15" max="115" value="50" id="tslider">
+            <p>Water Temperature: <span id="tsliderValue">73</span></p>
           </div>
           <div class="temperature-box" id="temperatureBox">
-            Recommended Bath Water Temperature: <span id="recommendedTemperature">96.8</span>°F
+            Current Room Temperature: <span id="currentRoomTemp">75</span>°F
+          </div>
+          <div class="temperature-box" id="temperatureBox">
+            Recommended Bath Water Temperature: <span id="trecommendedTemperature">96.8</span>°F
           </div>
         </div>
 
         <div id = "Air">
           <div class="slider-container">
-            <input type="range" class="slider" min="-15" max="115" value="50" id="slider">
-            <p>Current Room Temperature: <span id="sliderValue">73</span></p>
+            <p>Set Room Temperature: <span id="asliderValue">75</span></p>
+            <input type="range" class="slider" min="-15" max="115" value="75" id="aslider">
+            <p>Current Room Temperature: <span id="actualtemp">75</span></p>
           </div>
           <div class="temperature-box" id="temperatureBox">
-            Recommended Room Temperature: <span id="recommendedTemperature">35</span>°F
+            Outdoor Temperature: <span id="trecommendedTemperature">96.8</span>°F
+          </div>
+          <div class="temperature-box" id="temperatureBox">
+            Recommended Room Temperature: <span id="arecommendedTemperature">76</span>°F
           </div>
         </div>
 
@@ -265,6 +272,8 @@
       $("#bathroom").click(() => {
         heater_show = false;
         ac_show = false;
+        $("#temperature").slideUp();
+        $("#Air").slideUp();
         if (bathroom_show) {
           $("#device_table").slideUp();
           bathroom_show = false;
@@ -277,6 +286,8 @@
       $("#heater").click(() => {
         bathroom_show = false;
         ac_show = false;
+        $("#device_table").slideUp();
+        $("#Air").slideUp();
         if (heater_show) {
           $("#temperature").slideUp();
           heater_show = false;
@@ -289,6 +300,8 @@
       $("#ac").click(() => {
         bathroom_show = false;
         heater_show = false;
+        $("#device_table").slideUp();
+        $("#temperature").slideUp();
         if (ac_show) {
           $("#Air").slideUp();
           ac_show = false;
@@ -298,17 +311,54 @@
         }
       })
 
-      const slider = document.getElementById("slider");
-      const sliderValueDisplay = document.getElementById("sliderValue");
-      const recommendedTemperatureDisplay = document.getElementById("recommendedTemperature");
+      function updateHeaterCurrentTemperature(value) {
+        const currentRoomTemperatureDisplay = document.getElementById("currentRoomTemp");
+        currentRoomTemperatureDisplay.textContent = value;
+      }
+      const slider = document.getElementById("tslider");
+      const sliderValueDisplay = document.getElementById("tsliderValue");
+      const recommendedTemperatureDisplay = document.getElementById("trecommendedTemperature");
+
+      const aslider = document.getElementById("aslider");
+      const asliderValueDisplay = document.getElementById("asliderValue");s
+      const currentRoomTempDisplay = document.getElementById("currentRoomTemp");
+
+      let currentAirTemp = 75; // Initial value for the current room temperature in the air conditioner
+
+      function updateAirConditionerTemperature(targetTemp) {
+        const step = targetTemp > currentAirTemp ? 1 : -1;
+        const interval = setInterval(() => {
+          if (currentAirTemp === targetTemp) {
+            clearInterval(interval);
+          } else {
+            currentAirTemp += step;
+            currentRoomTempDisplay.textContent = currentAirTemp;
+          }
+        }, 100); // Adjust the interval as needed (milliseconds)
+      }
 
       slider.addEventListener("input", () => {
         sliderValueDisplay.textContent = slider.value;
-        const calculatedTemperature = calculateTemperature(slider.value);
-        recommendedTemperatureDisplay.textContent = calculatedTemperature;
+        recommendedTemperatureDisplay.textContent = aslider.value;
       });
 
-      function calculateTemperature(value) {
+      
+
+      aslider.addEventListener("input", () => {
+        asliderValueDisplay.textContent = aslider.value;
+        updateHeaterCurrentTemperature(aslider.value);
+      });
+
+      function temcalculateTemperature(value) {
+        if(value < 50){
+          return 100;
+        }else{
+          return Math.round(-0.4615 * value + 123);
+        }
+        
+      }
+
+      function aircalculateTemperature(value) {
         if(value < 50){
           return 100;
         }else{
