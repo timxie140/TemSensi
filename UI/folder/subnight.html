@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Mogra&display=swap" rel="stylesheet">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Mogra&display=swap');
+            body{
+                background-image:url("../pic/background1_blur.jpg");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
+            h1{
+                text-align:center;
+                font-family:"Mogra",cursive;
+                font-size: 500%;
+            }
+            #resume:link,#resume:visited{
+                color:white;
+                text-decoration: none;
+            }
+            #resume:hover{
+                color:rgb(249, 10, 185);
+            }
+            .flex-container{
+                border-left: 1px solid white;
+                margin-top: 100px;
+                float:right;
+                display: flex;
+                flex-direction: column;
+                width:15%;
+                justify-content: space-between;
+            }
+            .flex-container > div{
+                align-self: center;
+                height: 70px;
+                color:aliceblue;
+            }
+            .file:link,.file:visited{
+                color:white;
+                text-decoration: none;
+            }
+
+        </style>
+        <link rel="icon" type="image/png" href="../pic/beads.png">
+        <title>
+            BIJUN's Website
+        </title>
+    </head>
+    <body>
+        <a href="subday.html"><img src="../pic/sun.png" alt="Day Mode" style="width:55px; height:55px; margin:25px;"></a>
+        <a href="../dark.html"><img src="../pic/arrow-left.png" alt="back" style="width:50px; height:50px; float:right; margin:20px;"></a>
+        <div class="flex-container">
+            <div>
+                <img src="../pic/html.png" alt="html" style="width:25px; height:25px;"> 
+                <a class="file" href="../ITWS/Lab1.html" target="_blank">Lab1.html</a>
+            </div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+        </div>
+        <h1 style="margin-top:220px;"><a id="resume" href="resume.html" title="email:wub8@rpi.edu, click to view personal information" target="_blank">Bijun Wu</a></h1>
+    </body>
+</html>
