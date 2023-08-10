@@ -1,4 +1,6 @@
-api/api-js
+api/api-js/node_modules/
+api/heater
+api/sensor
 api/api
 api/sensors.json
 .vscode/
