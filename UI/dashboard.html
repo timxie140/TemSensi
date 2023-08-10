@@ -320,21 +320,25 @@
       const recommendedTemperatureDisplay = document.getElementById("trecommendedTemperature");
 
       const aslider = document.getElementById("aslider");
-      const asliderValueDisplay = document.getElementById("asliderValue");s
-      const currentRoomTempDisplay = document.getElementById("currentRoomTemp");
+      const asliderValueDisplay = document.getElementById("asliderValue");
+      const currentRoomTempDisplay = document.getElementById("actualtemp");
 
-      let currentAirTemp = 75; // Initial value for the current room temperature in the air conditioner
+      let currentAirTemp = 75;
+      let temperatureUpdateInterval = null; // Initialize an interval variable
 
       function updateAirConditionerTemperature(targetTemp) {
-        const step = targetTemp > currentAirTemp ? 1 : -1;
-        const interval = setInterval(() => {
+        if (temperatureUpdateInterval) {
+          clearInterval(temperatureUpdateInterval);
+        }
+        temperatureUpdateInterval = setInterval(() => {
+          const step = targetTemp > currentAirTemp ? 1 : -1;
+          currentAirTemp += step;
+          currentRoomTempDisplay.textContent = currentAirTemp;
           if (currentAirTemp === targetTemp) {
-            clearInterval(interval);
-          } else {
-            currentAirTemp += step;
-            currentRoomTempDisplay.textContent = currentAirTemp;
+            clearInterval(temperatureUpdateInterval);
+            temperatureUpdateInterval = null;
           }
-        }, 100); // Adjust the interval as needed (milliseconds)
+        }, 800);
       }
 
       slider.addEventListener("input", () => {
@@ -342,11 +346,15 @@
         recommendedTemperatureDisplay.textContent = aslider.value;
       });
 
-      
-
       aslider.addEventListener("input", () => {
         asliderValueDisplay.textContent = aslider.value;
         updateHeaterCurrentTemperature(aslider.value);
+      });
+
+      aslider.addEventListener("change", () => {
+        if (!temperatureUpdateInterval) {
+          updateAirConditionerTemperature(Number(aslider.value));
+        }
       });
 
       function temcalculateTemperature(value) {
