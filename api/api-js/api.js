@@ -16,11 +16,11 @@ class TempSensor {
 
 app.use(bodyParser.json());
 
-if (!fs.existsSync('sensors.json')) {
-    fs.writeFileSync('sensors.json', '[]', 'utf8'); // Initialize it with an empty array.
+if (!fs.existsSync('devices.json')) {
+    fs.writeFileSync('devices.json', '[]', 'utf8'); // Initialize it with an empty array.
 }
 
-fs.readFile('sensors.json', 'utf8', (err, data) => {
+fs.readFile('devices.json', 'utf8', (err, data) => {
     if (err) {
         console.error('Error reading sensors.json:', err);
         return;
@@ -32,43 +32,43 @@ fs.readFile('sensors.json', 'utf8', (err, data) => {
     });
 });
 
-app.post('/sensor/temperature', (req, res) => {
+app.post('/device', (req, res) => {
     if (Array.isArray(req.body)) {
         let newSensors = req.body.map(sensorData => {
-            // Check if sensor with given ID already exists
+            // Check if device with given ID already exists
             if (sensorList.some(sensor => sensor.id === sensorData.id)) {
-                console.log(`Sensor ${sensorData.id} already exists. Ignoring.`);
+                console.log(`Device ${sensorData.id} already exists. Ignoring.`);
                 return `Device ${sensorData.id} already exists`;
             }
             let newSensor = new TempSensor(sensorData.id, sensorData.room, sensorData.temperature, sensorData.deviceType); // Adjusted for deviceType
             sensorList.push(newSensor);
-            console.log(`Adding new sensor ${newSensor.id}`);
+            console.log(`Adding new device ${newSensor.id}`);
             return `Device ${newSensor.id} added`;
         });
         res.send(newSensors.join('\n'));
     } else {
-        // Check if sensor with given ID already exists
+        // Check if device with given ID already exists
         if (sensorList.some(sensor => sensor.id === req.body.id)) {
-            console.log(`Sensor ${req.body.id} already exists. Ignoring.`);
-            res.status(400).send(`Sensor ${req.body.id} already exists\n`);
+            console.log(`Device ${req.body.id} already exists. Ignoring.`);
+            res.status(400).send(`Device ${req.body.id} already exists\n`);
             return;
         }
         let newSensor = new TempSensor(req.body.id, req.body.room, req.body.temperature, req.body.deviceType); // Adjusted for deviceType
         sensorList.push(newSensor);
-        console.log(`Adding new sensor ${newSensor.id}`);
-        res.send(`Sensor ${newSensor.id} added\n`);
+        console.log(`Adding new device ${newSensor.id}`);
+        res.send(`Device ${newSensor.id} added\n`);
     }
-    fs.writeFile('sensors.json', JSON.stringify(sensorList, null, 2), (err) => {
+    fs.writeFile('devices.json', JSON.stringify(sensorList, null, 2), (err) => {
         if (err) {
             console.error(`Error writing to file: ${err}`);
         } else {
-            console.log(`Sensor list saved to file`);
+            console.log(`Device list saved to file`);
         }
     });
 });
 
 
-app.delete('/sensor/temperature/:id', (req, res) => {
+app.delete('/device/:id', (req, res) => {
     let idToDelete = req.params.id;
     if (!sensorList.find(sensor => sensor.id === idToDelete)) {
         console.log(`Sensor ${idToDelete} not found.`);
@@ -87,7 +87,7 @@ app.delete('/sensor/temperature/:id', (req, res) => {
     });
 });
 
-app.get('/sensor/temperature/:id', (req, res) => {
+app.get('/device/:id', (req, res) => {
     let sensorId = req.params.id;
     let sensor = sensorList.find(sensor => sensor.id === sensorId);
     if (sensor) {
@@ -97,7 +97,7 @@ app.get('/sensor/temperature/:id', (req, res) => {
     }
 });
 
-app.get('/sensor/temperature', (req, res) => {
+app.get('/device', (req, res) => {
     let response = sensorList.map(sensor => `Sensor: ${sensor.id}, Location: ${sensor.room}, Temperature: ${sensor.temperature}, Device Type: ${sensor.deviceType}`).join('\n'); // Adjusted for deviceType
     if (response === '') {
         response = 'No sensors added yet';
