@@ -1,4 +1,5 @@
 api/api-js/node_modules/
+api/api-js/sensors.json
 api/heater
 api/sensor
 api/api
