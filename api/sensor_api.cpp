@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 
+//g++ -std=c++11 -o api sensor_api.cpp -lcpprest -lcrypto -lssl   command line to compile
+
 using namespace web;
 using namespace web::http;
 using namespace web::http::experimental::listener;
