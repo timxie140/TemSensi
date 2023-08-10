@@ -126,10 +126,23 @@
     }
 
     .temperature-box{
-      width: 80%;
-      max-width: 400px;
-      margin: 50px auto;
+      margin-top: 20px;
+      padding: 60px;
+      background-color: #f0f0f0;
+      text-align: center;
+      border-radius: 10px;
       background-color: #e5e900;
+      font-size: 30;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .temperature-box.orange {
+      background-color: orange;
+    }
+  
+    .temperature-box.green {
+      background-color: green;
+      color: white; /* Change text color to make it more readable on green background */
     }
 
     
@@ -281,6 +294,16 @@
           return Math.round(-0.4615 * value + 123);
         }
         
+      }
+
+      function updateTemperatureBoxColor(temperature) {
+        if (temperature <= 70) {
+          temperatureBox.classList.remove("orange");
+          temperatureBox.classList.add("green");
+        } else {
+          temperatureBox.classList.remove("green");
+          temperatureBox.classList.add("orange");
+        }
       }
 
     </script>
