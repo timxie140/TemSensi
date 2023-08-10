@@ -266,7 +266,7 @@
         <div id = "Air">
           <div class="temperature-content">
             <div class="temperature-image">
-              <img src="pic/shower.gif" alt="Temperature Image">
+              <img id="temperatureImageAir" alt="Temperature Image">
             </div>
             <div class="temperature-details">
               <div class="slider-container">
@@ -399,9 +399,20 @@
 
       // Call the function to start updating the outdoor temperature at an interval
       setInterval(updateOutdoorTemperature, 7000); // Change the temperature every 5 seconds
-
+      const temperatureImageAir = document.getElementById("temperatureImageAir");
+      temperatureImageAir.src = "pic/hot.gif";  
 
       function updateAirConditionerTemperature(targetTemp) {
+
+        const temperatureImageAir = document.getElementById("temperatureImageAir");
+
+        // Determine the temperature image based on currentAirTemp
+        if (targetTemp < 75) {
+          temperatureImageAir.src = "pic/cold.gif"; // Change the image source to cold.gif
+        } else {
+          temperatureImageAir.src = "pic/hot.gif"; // Change the image source to hot.gif
+        }
+
         if (temperatureUpdateInterval) {
           clearInterval(temperatureUpdateInterval);
         }
@@ -414,6 +425,7 @@
             temperatureUpdateInterval = null;
           }
         }, 2000);
+
       }
 
       slider.addEventListener("input", () => {
