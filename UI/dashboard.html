@@ -135,6 +135,46 @@
       text-align: center;
       font-weight: bold;
     }
+    /* New classes for temperature content layout */
+    .temperature-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .temperature-image {
+      flex: 1;
+      max-width: 30%;
+      padding: 20px;
+    }
+
+    .temperature-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .temperature-details {
+      flex: 3; /* Adjust the flex value */
+      padding-left: 60px; /* Add padding to push the content further to the right */
+    }
+
+    #temperature {
+      padding-left: 80px;
+    }
+
+    #Air {
+      padding-left: 80px;
+    }
+
+    .slider-image {
+      margin-right: 10px; /* Adjust the spacing between the image and slider */
+    }
+
+    .slider-image img {
+      width: 40px; /* Adjust the width of the image as needed */
+      height: 40px;
+    }
 
     
   </style>
@@ -201,29 +241,46 @@
         </div>
 
         <div id = "temperature">
-          <div class="slider-container">
-            <input type="range" class="slider" min="-15" max="115" value="50" id="tslider">
-            <p>Water Temperature: <span id="tsliderValue">73</span></p>
-          </div>
-          <div class="temperature-box" id="temperatureBox">
-            Current Room Temperature: <span id="currentRoomTemp">75</span>°F
-          </div>
-          <div class="temperature-box" id="temperatureBox">
-            Recommended Bath Water Temperature: <span id="trecommendedTemperature">96.8</span>°F
+          <div class="temperature-content">
+            <div class="temperature-image">
+              <img src="pic/shower.gif" alt="Temperature Image">
+            </div>
+            <div class="temperature-details">
+              <div class="slider-container">
+                <div class="slider-image">
+                  <img src="pic/options.gif" alt="Heater Image">
+                </div>
+                <input type="range" class="slider" min="-15" max="115" value="50" id="tslider">
+                <p>Water Temperature: <span id="tsliderValue">73</span></p>
+              </div>
+              <div class="temperature-box" id="temperatureBox">
+                Current Room Temperature: <span id="currentRoomTemp">75</span>°F
+              </div>
+              <div class="temperature-box" id="temperatureBox">
+                Recommended Bath Water Temperature: <span id="trecommendedTemperature">96.8</span>°F
+              </div>
+            </div>
           </div>
         </div>
 
         <div id = "Air">
-          <div class="slider-container">
-            <p>Set Room Temperature: <span id="asliderValue">75</span></p>
-            <input type="range" class="slider" min="-15" max="115" value="75" id="aslider">
-            <p>Current Room Temperature: <span id="actualtemp">75</span></p>
-          </div>
-          <div class="temperature-box" id="temperatureBox">
-            Outdoor Temperature: <span id="outdoorTemp">75.6</span>°F
-          </div>
-          <div class="temperature-box" id="temperatureBox">
-            Recommended Room Temperature: <span id="arecommendedTemperature">76</span>°F
+          <div class="temperature-content">
+            <div class="temperature-image">
+              <img src="pic/shower.gif" alt="Temperature Image">
+            </div>
+            <div class="temperature-details">
+              <div class="slider-container">
+                <p>Set Room Temperature: <span id="asliderValue">75</span></p>
+                <input type="range" class="slider" min="-15" max="115" value="75" id="aslider">
+                <p>Current Room Temperature: <span id="actualtemp">75</span></p>
+              </div>
+              <div class="temperature-box" id="temperatureBox">
+                Outdoor Temperature: <span id="outdoorTemp">75.6</span>°F
+              </div>
+              <div class="temperature-box" id="temperatureBox">
+                Recommended Room Temperature: <span id="arecommendedTemperature">76</span>°F
+              </div>
+            </div>
           </div>
         </div>
 
