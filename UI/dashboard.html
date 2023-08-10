@@ -176,6 +176,47 @@
       height: 40px;
     }
 
+    .home-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .home-header h1 {
+      font-size: 28px;
+    }
+
+    .home-overview {
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .feature {
+      margin: 20px 0;
+    }
+
+    .feature h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .interact-section {
+      padding: 20px;
+      background-color: #eaf7ff;
+      border-radius: 8px;
+    }
+
+    .interact-section ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .interact-section li {
+      margin-bottom: 10px;
+    }
+
+
     
   </style>
   <!-- jQuery -->
@@ -192,11 +233,49 @@
     <!-- Content area -->
     <div class="content">
       <div id="homeContent" class="hidden-content">
-        <h1>Welcome to the Home Page</h1>
-        <p>This is the home page content.</p>
+        <div class="home-header">
+          <h1>Welcome to the Dashboard</h1>
+          <p>Your Smart Home Control Center</p>
+        </div>
+        
+        <div class="home-overview">
+          <h2>Explore Your Dashboard</h2>
+          <p>Take control of your smart home devices with ease. Discover the features offered in each section:</p>
+          
+          <div class="feature">
+            <h3>Devices</h3>
+            <p>Manage and monitor various devices, from bathroom appliances to heaters and air conditioners.</p>
+          </div>
+          
+          <div class="feature">
+            <h3>Bathroom Appliances</h3>
+            <p>Adjust water temperature, control faucets, and manage shower settings for your comfort.</p>
+          </div>
+          
+          <div class="feature">
+            <h3>Heater</h3>
+            <p>Set the perfect water temperature and stay informed about the room's current temperature.</p>
+          </div>
+          
+          <div class="feature">
+            <h3>Air Conditioner</h3>
+            <p>Stay comfortable by setting your desired room temperature and tracking outdoor temperature information.</p>
+          </div>
+        </div>
+        
+        <div class="interact-section">
+          <h2>Get Started</h2>
+          <p>Begin your smart home experience by interacting with the dashboard's controls:</p>
+          <ul>
+            <li>Use sliders to adjust temperatures and settings.</li>
+            <li>Click on category links in the sidebar to navigate to different sections.</li>
+            <li>Explore images and data to better understand your home's environment.</li>
+          </ul>
+        </div>
       </div>
+      
       <div id="devicesContent" class="hidden-content">
-        <h1>Devices</h1>
+        <h1><img src="pic/appliances.gif" alt="appliances Image" style = "width: 80px; height: 80px"></h1>
         <p>Select a category:</p>
         <div class="category-bar">
           <p id="bathroom">Bathroom</p>
@@ -266,7 +345,7 @@
         <div id = "Air">
           <div class="temperature-content">
             <div class="temperature-image">
-              <img id="temperatureImageAir" alt="Temperature Image">
+              <img id="temperatureImageAir" alt="Temperature Image" style = "width: 400px; height: 300px">
             </div>
             <div class="temperature-details">
               <div class="slider-container">
