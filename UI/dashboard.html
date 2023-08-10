@@ -159,50 +159,51 @@
           <p id="heater">Heater</p>
           <p id="ac">Air Conditioner</p>
         </div>
-      </div>
+      
 
 
-      <div id="device_table">
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>67001</th>
-            <th>67002</th>
-            <th>67003</th>
-          </tr>
-          <div id = 'table_content'>
-          <tr>
-            
-            <th>Brand</th>
-            <th>EC:22</th>
-            <th>ROCA</th>
-            <th>B3</th>
-          </tr>
-          <!-- random values -->
-          <tr>
-            <th>On/Off</th>
-            <th>On</th>
-            <th>Off</th>
-            <th>On</th>
-          </tr>
+        <div id="device_table">
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>67001</th>
+              <th>67002</th>
+              <th>67003</th>
+            </tr>
+            <div id = 'table_content'>
+            <tr>
+              
+              <th>Brand</th>
+              <th>EC:22</th>
+              <th>ROCA</th>
+              <th>B3</th>
+            </tr>
+            <!-- random values -->
+            <tr>
+              <th>On/Off</th>
+              <th>On</th>
+              <th>Off</th>
+              <th>On</th>
+            </tr>
 
-          <tr>
-            <th>Picture</th>
-            <th><img src = "pic/bath.webp" style = "width: 100px; height: 100px"></th>
-            <th><img src = "pic/roca.jpg" style = "width: 100px; height: 100px"></th>
-            <th><img src = "pic/shower.jpg" style = "width: 100px; height: 100px"></th>
-          </tr>
+            <tr>
+              <th>Picture</th>
+              <th><img src = "pic/bath.webp" style = "width: 100px; height: 100px"></th>
+              <th><img src = "pic/roca.jpg" style = "width: 100px; height: 100px"></th>
+              <th><img src = "pic/shower.jpg" style = "width: 100px; height: 100px"></th>
+            </tr>
+          </div>
+          </table>
         </div>
-        </table>
-      </div>
 
-      <div id = "temperature">
-        <div class="slider-container">
-          <input type="range" class="slider" min="-15" max="115" value="50" id="slider">
-          <p>Room Temperature: <span id="sliderValue">50</span></p>
-        </div>
-        <div class="temperature-box" id="temperatureBox">
-          Recommended Bath Water Temperature: <span id="recommendedTemperature">35</span>°C
+        <div id = "temperature">
+          <div class="slider-container">
+            <input type="range" class="slider" min="-15" max="115" value="50" id="slider">
+            <p>Room Temperature: <span id="sliderValue">50</span></p>
+          </div>
+          <div class="temperature-box" id="temperatureBox">
+            Recommended Bath Water Temperature: <span id="recommendedTemperature">35</span>°C
+          </div>
         </div>
       </div>
       <!-- <div id="bathroomContent" class="hidden-content">
@@ -238,7 +239,9 @@
         // Highlight the selected category link
         const selectedCategoryLink = document.querySelector(`.category-bar a[href="#"][onclick="showContent('${contentType}')"]`);
         selectedCategoryLink.classList.add('active');
+
       }
+      $("#temperature").slideUp();
       document.getElementById('homeContent').style.display = 'block';
       var bathroom_show = false;
       var heater_show = false;
