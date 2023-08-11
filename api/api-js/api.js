@@ -138,6 +138,9 @@ app.get('/device', (req, res) => {
         });    
         response = sortedDevices.map(device => `Location: ${device.room}, Device Type: ${device.deviceType}, Temperature: ${device.temperature}`).join('\n');
     }
+    else {
+        response = deviceList.map(device => `Location: ${device.room}, Device Type: ${device.deviceType}, Temperature: ${device.temperature}`).join('\n');
+    }
 
     if (response === '') {
         response = 'No device added yet';
