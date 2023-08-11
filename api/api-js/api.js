@@ -140,14 +140,18 @@ app.get('/device', (req, res) => {
 app.patch('/device/:id', (req, res) => {
     let deviceId = req.params.id;
     let device = deviceList.find(device => device.id === deviceId);
+    let response = 'Device updated:\n';
     if (device) {
-        if (req.body.temperature) {
+        if (req.body.temperature && req.body.temperature !== device.temperature) {
             device.temperature = req.body.temperature;
+            console.log(`Device ${device.id} temperature updated to ${device.temperature}`);
         }
-        if (req.body.room) {
+        if (req.body.room && req.body.room !== device.room) {
+            response += `Device moved from ${device.room} to ${req.body.room}\n`;
             device.room = req.body.room;
         }
-        if (req.body.deviceType) { // Added for deviceType
+        if (req.body.deviceType && req.body.deviceType != device.deviceType) { // Added for deviceType
+            response += `Changing device, switch to another type: from ${device.deviceType} to ${req.body.deviceType}\n`;
             device.deviceType = req.body.deviceType;
         }
         fs.writeFile('devices.json', JSON.stringify(deviceList), (err) => {
@@ -156,8 +160,12 @@ app.patch('/device/:id', (req, res) => {
                 res.status(500).send('An error occurred while updating the device');
                 return;
             }
-            res.send(`Device ${deviceId} updated\n`);
         });
+        console.log(`Device ${device.id} updated`);
+        if (response === 'Device updated:\n') {
+            response = 'No new data provided for update';
+        }
+        res.send(response);
     } else {
         res.status(404).send('Device not found');
     }
