@@ -112,7 +112,7 @@ app.get('/device/type/:deviceType', (req, res) => {
     if (matchingDevices.length === 0) {
         res.status(404).send('No devices found');
     } else {
-        const response = matchingDevices.map(device => `Location: ${device.room}, Temperature: ${device.temperature}, Device: ${device.deviceType}`).join('\n');
+        const response = matchingDevices.map(device => `Device: ${device.deviceType}, Location: ${device.room}, Temperature: ${device.temperature}`).join('\n');
         res.send(response);
     }
 });
@@ -120,6 +120,7 @@ app.get('/device/type/:deviceType', (req, res) => {
 
 app.get('/device', (req, res) => {
     let sortedDevices = deviceList;
+    let response = '';
 
     // Check for the 'sort' query parameter. If its value is 'deviceType', sort by that attribute.
     if (req.query.sort === 'deviceType') {
@@ -128,9 +129,16 @@ app.get('/device', (req, res) => {
             if (a.deviceType > b.deviceType) return 1;
             return 0;
         });
+        response = sortedDevices.map(device => `Device Type: ${device.deviceType}, Location: ${device.room}, Temperature: ${device.temperature}`).join('\n'); 
+    }else if (req.query.sort === 'room') {
+        sortedDevices = deviceList.slice().sort((a, b) => {
+            if (a.room < b.room) return -1;
+            if (a.room > b.room) return 1;
+            return 0;
+        });    
+        response = sortedDevices.map(device => `Location: ${device.room}, Device Type: ${device.deviceType}, Temperature: ${device.temperature}`).join('\n');
     }
 
-    let response = sortedDevices.map(device => `Location: ${device.room}, Temperature: ${device.temperature}, Device Type: ${device.deviceType}`).join('\n'); 
     if (response === '') {
         response = 'No device added yet';
     }
