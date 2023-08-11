@@ -1,0 +1,40 @@
+deviceList:
+  - name: sensors
+    profileName: sensor_json
+    description: Temperature Sensor device that sends in JSON data
+    labels:
+      - rest
+      - json
+    protocols:
+      other: {}
+  - name: heater
+    profileName: heater_json
+    description: heater Device that sends in json data
+    labels:
+      - rest
+      - json
+    protocols:
+      other: {}
+  - name: AC
+    profileName: AC_json
+    description: AC Device that sends in json data
+    labels:
+      - rest
+      - json
+    protocols:
+      other: {}
+  - name: 2way-rest-device
+    profileName: sample-2way-rest-device
+    description: RESTful Device that sends data
+    labels:
+      - rest
+      - 2way-rest-device
+    protocols:
+      REST:
+        Host: 172.27.165.245
+        Port: '5000'
+        Path: api
+    autoEvents:
+      - Interval: 20s
+        OnChange: false
+        SourceName: json

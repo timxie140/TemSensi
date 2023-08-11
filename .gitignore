@@ -1,0 +1,7 @@
+api/api-js/node_modules/
+api/api-js/devices.json
+api/heater
+api/sensor
+api/api
+api/sensors.json
+.vscode/
