@@ -7,8 +7,8 @@ const { v4: uuidv4 } = require('uuid');
 let deviceList = [];
 
 class Device {
-    constructor(room, temperature, deviceType) { // Added deviceType
-        this.id = uuidv4();
+    constructor(id, room, temperature, deviceType) { // Added deviceType
+        this.id = id || uuidv4();
         this.room = room;
         this.temperature = temperature;
         this.deviceType = deviceType; // Store the deviceType
@@ -32,7 +32,7 @@ fs.readFile('devices.json', 'utf8', (err, data) => {
     }
     let deviceData = JSON.parse(data);
     deviceList = deviceData.map(deviceData => {
-        let device = new Device(deviceData.room, deviceData.temperature, deviceData.deviceType); // Adjusted for deviceType
+        let device = new Device(deviceData.id, deviceData.room, deviceData.temperature, deviceData.deviceType); // Adjusted for deviceType
         return device;
     });
 });
@@ -45,7 +45,7 @@ app.post('/device', (req, res) => {
                 console.log(`Device ${deviceData.id} already exists. Ignoring.`);
                 return `Device ${deviceData.id} already exists`;
             }
-            let newDevice = new Device(deviceData.room, deviceData.temperature, deviceData.deviceType); // Adjusted for deviceType
+            let newDevice = new Device(deviceData.id, deviceData.room, deviceData.temperature, deviceData.deviceType); // Adjusted for deviceType
             deviceList.push(newDevice);
             console.log(`Adding new device ${newDevice.id}`);
             return `Device ${newDevice.deviceType} added`;
@@ -58,7 +58,7 @@ app.post('/device', (req, res) => {
             res.status(400).send(`Device ${req.body.id} already exists\n`);
             return;
         }
-        let newDevice = new Device(req.body.room, req.body.temperature, req.body.deviceType); // Adjusted for deviceType
+        let newDevice = new Device(req.id, req.body.room, req.body.temperature, req.body.deviceType); // Adjusted for deviceType
         deviceList.push(newDevice);
         console.log(`Adding new device ${newDevice.id}`);
         res.send(`Device ${newDevice.deviceType} added\n`);
