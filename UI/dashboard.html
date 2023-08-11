@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Main container */
+    .dashboard-container {
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: #333;
+      color: #fff;
+      width: 200px;
+      height: 100vh; /* Full height of the viewport */
+      padding: 20px;
+      position: fixed; /* To keep the sidebar fixed on the left side */
+    }
+
+    /* Sidebar link styles */
+    .sidebar a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 10px;
+      padding: 10px;
+      transition: background-color 0.3s ease; /* Adding transition effect */
+    }
+
+    /* Hover effect for sidebar links */
+    .sidebar a:hover {
+      background-color: #555;
+    }
+
+    /* Content area */
+    .content {
+      flex: 1;
+      padding: 30px;
+      margin-left: 220px; /* To create space for the sidebar */
+    }
+
+    /* Hidden content divs */
+    .hidden-content {
+      display: none;
+    }
+
+    /* Category bar */
+    .category-bar {
+      display: flex;
+      justify-content: space-around;
+      background-color: #ddd;
+      padding: 10px 0;
+    }
+
+    /* Category bar link styles */
+    .category-bar p {
+      display: inline-block;
+      color: #333;
+      text-decoration: none;
+      padding: 8px 16px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* Hover effect for category bar links */
+    .category-bar p:hover {
+      background-color: #555;
+      color: #fff;
+    }
+
+    /* Board */
+    .board {
+      border: 1px solid #ccc;
+      padding: 20px;
+      display: none;
+      width: calc(100% - 40px);
+      margin: 10px;
+    }
+
+    /* Highlight the selected category */
+    .category-bar a.active {
+      background-color: gray;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    #device_table {
+      display: none;
+    }
+    #table_content {
+      font-weight: lighter;
+    }
+
+    .slider-container {
+      width: 80%;
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    .slider {
+      width: 100%;
+    }
+
+    .temperature-box{
+      margin-top: 20px;
+      padding: 60px;
+      background-color: #f0f0f0;
+      text-align: center;
+      border-radius: 10px;
+      background-color: #e5e900;
+      font-size: 30;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .temperature-box.orange {
+      background-color: orange;
+    }
+  
+    .temperature-box.green {
+      background-color: green;
+      color: white; /* Change text color to make it more readable on green background */
+    }
+    /* New classes for temperature content layout */
+    .temperature-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .temperature-image {
+      flex: 1;
+      max-width: 30%;
+      padding: 20px;
+    }
+
+    .temperature-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .temperature-details {
+      flex: 3; /* Adjust the flex value */
+      padding-left: 60px; /* Add padding to push the content further to the right */
+    }
+
+    #temperature {
+      padding-left: 80px;
+    }
+
+    #Air {
+      padding-left: 80px;
+    }
+
+    .slider-image {
+      margin-right: 10px; /* Adjust the spacing between the image and slider */
+    }
+
+    .slider-image img {
+      width: 40px; /* Adjust the width of the image as needed */
+      height: 40px;
+    }
+
+    .home-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .home-header h1 {
+      font-size: 28px;
+    }
+
+    .home-overview {
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    .feature {
+      margin: 20px 0;
+    }
+
+    .feature h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .interact-section {
+      padding: 20px;
+      background-color: #eaf7ff;
+      border-radius: 8px;
+    }
+
+    .interact-section ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .interact-section li {
+      margin-bottom: 10px;
+    }
+
+
+    
+  </style>
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="active" onclick="showContent('home')">Home</a>
+      <a href="#" onclick="showContent('devices')">Devices</a>
+    </div>
+
+    <!-- Content area -->
+    <div class="content">
+      <div id="homeContent" class="hidden-content">
+        <div class="home-header">
+          <h1>Welcome to the Dashboard</h1>
+          <p>Your Smart Home Control Center</p>
+        </div>
+        
+        <div class="home-overview">
+          <h2>Explore Your Dashboard</h2>
+          <p>Take control of your smart home devices with ease. Discover the features offered in each section:</p>
+          
+          <div class="feature">
+            <h3>Devices</h3>
+            <p>Manage and monitor various devices, from bathroom appliances to heaters and air conditioners.</p>
+          </div>
+          
+          <div class="feature">
+            <h3>Bathroom Appliances</h3>
+            <p>Adjust water temperature, control faucets, and manage shower settings for your comfort.</p>
+          </div>
+          
+          <div class="feature">
+            <h3>Heater</h3>
+            <p>Set the perfect water temperature and stay informed about the room's current temperature.</p>
+          </div>
+          
+          <div class="feature">
+            <h3>Air Conditioner</h3>
+            <p>Stay comfortable by setting your desired room temperature and tracking outdoor temperature information.</p>
+          </div>
+        </div>
+        
+        <div class="interact-section">
+          <h2>Get Started</h2>
+          <p>Begin your smart home experience by interacting with the dashboard's controls:</p>
+          <ul>
+            <li>Use sliders to adjust temperatures and settings.</li>
+            <li>Click on category links in the sidebar to navigate to different sections.</li>
+            <li>Explore images and data to better understand your home's environment.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div id="devicesContent" class="hidden-content">
+        <h1><img src="pic/appliances.gif" alt="appliances Image" style = "width: 80px; height: 80px"></h1>
+        <p>Select a category:</p>
+        <div class="category-bar">
+          <p id="bathroom">Bathroom</p>
+          <p id="heater">Heater</p>
+          <p id="ac">Air Conditioner</p>
+        </div>
+      
+
+
+        <div id="device_table">
+
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>67001</th>
+              <th>67002</th>
+              <th>67003</th>
+            </tr>
+            <div id = 'table_content'>
+            <tr>
+              
+              <th>Brand</th>
+              <th>EC:22</th>
+              <th>ROCA</th>
+              <th>B3</th>
+            </tr>
+            <!-- random values -->
+            <tr>
+              <th>On/Off</th>
+              <th>On</th>
+              <th>Off</th>
+              <th>On</th>
+            </tr>
+
+            <tr>
+              <th>Picture</th>
+              <th><img src = "pic/bath.webp" style = "width: 100px; height: 100px"></th>
+              <th><img src = "pic/roca.jpg" style = "width: 100px; height: 100px"></th>
+              <th><img src = "pic/shower.jpg" style = "width: 100px; height: 100px"></th>
+            </tr>
+          </div>
+          </table>
+        </div>
+
+        <div id = "temperature">
+          <div class="temperature-content">
+            <div class="temperature-image">
+              <img src="pic/shower.gif" alt="Temperature Image">
+            </div>
+            <div class="temperature-details">
+              <div class="slider-container">
+                <div class="slider-image">
+                  <img src="pic/options.gif" alt="Heater Image">
+                </div>
+                <input type="range" class="slider" min="-15" max="115" value="50" id="tslider">
+                <p>Water Temperature: <span id="tsliderValue">73</span></p>
+              </div>
+              <div class="temperature-box" id="temperatureBox">
+                Current Room Temperature: <span id="currentRoomTemp">75</span>°F
+              </div>
+              <div class="temperature-box" id="temperatureBox">
+                Recommended Bath Water Temperature: <span id="trecommendedTemperature">96.8</span>°F
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id = "Air">
+          <div class="temperature-content">
+            <div class="temperature-image">
+              <img id="temperatureImageAir" alt="Temperature Image" style = "width: 400px; height: 300px">
+            </div>
+            <div class="temperature-details">
+              <div class="slider-container">
+                <p>Set Room Temperature: <span id="asliderValue">75</span></p>
+                <input type="range" class="slider" min="-15" max="115" value="75" id="aslider">
+                <p>Current Room Temperature: <span id="actualtemp">75</span></p>
+              </div>
+              <div class="temperature-box" id="temperatureBox">
+                Outdoor Temperature: <span id="outdoorTemp">75.6</span>°F
+              </div>
+              <div class="temperature-box" id="temperatureBox">
+                Recommended Room Temperature: <span id="arecommendedTemperature">76</span>°F
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      
+      <!-- <div id="bathroomContent" class="hidden-content">
+        <h1>Bathroom</h1>
+      </div>
+      <div id="waterContent" class="hidden-content">
+        <h1>Water</h1>
+      </div>
+      <div id="airConditionerContent" class="hidden-content">
+        <h1>Air Conditioner</h1>
+      </div> -->
+    </div>
+    
+    <script>
+      // Function to show the corresponding content based on button click
+      function showContent(contentType) {
+        // Hide all content divs
+        const contentDivs = document.querySelectorAll('.hidden-content');
+        contentDivs.forEach(div => {
+          div.style.display = 'none';
+        });
+
+        // Deactivate all category links
+        const categoryLinks = document.querySelectorAll('.category-bar a');
+        categoryLinks.forEach(link => {
+          link.classList.remove('active');
+        });
+
+        // Show the selected content div
+        const selectedContent = document.getElementById(contentType + 'Content');
+        selectedContent.style.display = 'block';
+
+        // Highlight the selected category link
+        const selectedCategoryLink = document.querySelector(`.category-bar a[href="#"][onclick="showContent('${contentType}')"]`);
+        selectedCategoryLink.classList.add('active');
+
+      }
+      $("#temperature").slideUp();
+      $("#Air").slideUp();
+      $("#device_table").slideUp();
+      document.getElementById('homeContent').style.display = 'block';
+
+      var bathroom_show = false;
+      var heater_show = false;
+      var ac_show = false;
+      $("#bathroom").click(() => {
+        heater_show = false;
+        ac_show = false;
+        $("#temperature").slideUp();
+        $("#Air").slideUp();
+        if (bathroom_show) {
+          $("#device_table").slideUp();
+          bathroom_show = false;
+        } else {
+          $("#device_table").slideDown();
+          bathroom_show = true;
+        }
+      }),
+
+      $("#heater").click(() => {
+        bathroom_show = false;
+        ac_show = false;
+        $("#device_table").slideUp();
+        $("#Air").slideUp();
+        if (heater_show) {
+          $("#temperature").slideUp();
+          heater_show = false;
+        } else {
+          $("#temperature").slideDown();
+          heater_show = true;
+        }
+      }),
+
+      $("#ac").click(() => {
+        bathroom_show = false;
+        heater_show = false;
+        $("#device_table").slideUp();
+        $("#temperature").slideUp();
+        if (ac_show) {
+          $("#Air").slideUp();
+          ac_show = false;
+        } else {
+          $("#Air").slideDown();
+          ac_show = true;
+        }
+      })
+
+      function updateHeaterCurrentTemperature(value) {
+        const currentRoomTemperatureDisplay = document.getElementById("currentRoomTemp");
+        currentRoomTemperatureDisplay.textContent = value;
+      }
+      const slider = document.getElementById("tslider");
+      const sliderValueDisplay = document.getElementById("tsliderValue");
+      const recommendedTemperatureDisplay = document.getElementById("trecommendedTemperature");
+
+      const aslider = document.getElementById("aslider");
+      const asliderValueDisplay = document.getElementById("asliderValue");
+      const currentRoomTempDisplay = document.getElementById("actualtemp");
+
+      let currentAirTemp = 75;
+      let temperatureUpdateInterval = null; // Initialize an interval variable
+
+      const outdoorTempDisplay = document.getElementById("outdoorTemp");
+      let currentOutdoorTemp = 75.6; // Initial value for the outdoor temperature
+
+      function updateOutdoorTemperature() {
+        const maxChange = 0.2; // Maximum change in temperature
+        const randomChange = (Math.random() - 0.5) * maxChange * 2; // Generates a random change within the specified range
+        currentOutdoorTemp += randomChange;
+        outdoorTempDisplay.textContent = currentOutdoorTemp.toFixed(1); // Display the temperature with one decimal point
+      }
+
+      // Call the function to start updating the outdoor temperature at an interval
+      setInterval(updateOutdoorTemperature, 7000); // Change the temperature every 5 seconds
+      const temperatureImageAir = document.getElementById("temperatureImageAir");
+      temperatureImageAir.src = "pic/hot.gif";  
+
+      function updateAirConditionerTemperature(targetTemp) {
+
+        const temperatureImageAir = document.getElementById("temperatureImageAir");
+
+        // Determine the temperature image based on currentAirTemp
+        if (targetTemp < 75) {
+          temperatureImageAir.src = "pic/cold.gif"; // Change the image source to cold.gif
+        } else {
+          temperatureImageAir.src = "pic/hot.gif"; // Change the image source to hot.gif
+        }
+
+        if (temperatureUpdateInterval) {
+          clearInterval(temperatureUpdateInterval);
+        }
+        temperatureUpdateInterval = setInterval(() => {
+          const step = targetTemp > currentAirTemp ? 1 : -1;
+          currentAirTemp += step;
+          currentRoomTempDisplay.textContent = currentAirTemp;
+          if (currentAirTemp === targetTemp) {
+            clearInterval(temperatureUpdateInterval);
+            temperatureUpdateInterval = null;
+          }
+        }, 2000);
+
+      }
+
+      slider.addEventListener("input", () => {
+        sliderValueDisplay.textContent = slider.value;
+        recommendedTemperatureDisplay.textContent = aslider.value;
+      });
+
+      aslider.addEventListener("input", () => {
+        asliderValueDisplay.textContent = aslider.value;
+        updateHeaterCurrentTemperature(aslider.value);
+      });
+
+      aslider.addEventListener("change", () => {
+        if (!temperatureUpdateInterval) {
+          updateAirConditionerTemperature(Number(aslider.value));
+        }
+      });
+
+      function temcalculateTemperature(value) {
+        if(value < 50){
+          return 100;
+        }else{
+          return Math.round(-0.4615 * value + 123);
+        }
+        
+      }
+
+      function aircalculateTemperature(value) {
+        if(value < 50){
+          return 100;
+        }else{
+          return Math.round(-0.4615 * value + 123);
+        }
+        
+      }
+
+      function updateTemperatureBoxColor(temperature) {
+        if (temperature <= 70) {
+          temperatureBox.classList.remove("orange");
+          temperatureBox.classList.add("green");
+        } else {
+          temperatureBox.classList.remove("green");
+          temperatureBox.classList.add("orange");
+        }
+      }
+
+    </script>
+  </div>
+</body>
+</html>
