@@ -330,6 +330,10 @@
 
         <div id="device_table">
 
+          <div id="ac-data">
+
+          </div>
+
           <form id="add-device-form">
             <label for="room">Room:</label>
             <input type="text" id="room" name="room" required><br>
@@ -653,6 +657,47 @@
       });
       
       fetchDeviceList();
+
+      const express = require('express');
+      const fs = require('fs');
+      const app = express();
+      const { v4: uuidv4 } = require('uuid');
+
+
+      app.get('/ac-data', (req, res) => {
+          fs.readFile('ac.json', 'utf8', (err, data) => {
+              if (err) {
+                  console.error('Error reading ac.json:', err);
+                  res.status(500).send('Error reading ac.json');
+                  return;
+              }
+              const acData = JSON.parse(data);
+              res.json(acData);
+          });
+      });
+
+
+      app.listen(5001, () => {
+          console.log('Server running on port 5001');
+      });
+
+      function fetchACData() {
+        fetch('/ac-data')
+            .then(response => response.json())
+            .then(data => {
+                const acDataDiv = document.getElementById('ac-data');
+                acDataDiv.innerHTML = `
+                    <p>Room: ${data.room}</p>
+                    <p>Device Type: ${data.device_type}</p>
+                    <p>Temperature: ${data.temperature}</p>
+                `;
+            })
+            .catch(error => console.error('Error fetching AC data:', error));
+      }
+
+      fetchACData();
+
+
 
     </script>
   </div>
