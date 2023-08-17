@@ -266,6 +266,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+
+
   <div class="dashboard-container">
     <!-- Sidebar -->
     <div class="sidebar">
@@ -688,6 +690,30 @@
         });
       });
 
+      app.get('/heater-data', (req, res) => {
+        fs.readFile('heater.json', 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading heater.json:', err);
+                res.status(500).send('Error reading heater.json');
+                return;
+            }
+            const heaterData = JSON.parse(data);
+            const tableHtml = generateTableHtml(heaterData);
+            res.send(tableHtml);
+        });
+    });
+      
+    function generateTableHtml(data) {
+          let tableHtml = '<table>';
+          tableHtml += '<tr><th>Heater ID</th><th>Current Temperature</th><th>Recommended Temperature</th></tr>';
+      
+          for (const entry of data) {
+              tableHtml += `<tr><td>${entry.heaterid}</td><td>${entry.current_temperature}</td><td>${entry.recommended_temperature}</td></tr>`;
+          }
+      
+          tableHtml += '</table>';
+          return tableHtml;
+      }
 
       app.listen(5001, () => {
           console.log('Server running on port 5001');
