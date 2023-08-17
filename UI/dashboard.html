@@ -676,6 +676,18 @@
           });
       });
 
+      app.get('/heater-data', (req, res) => {
+        fs.readFile('heater.json', 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading heater.json:', err);
+                res.status(500).send('Error reading heater.json');
+                return;
+            }
+            const heaterData = JSON.parse(data);
+            res.json(heaterData);
+        });
+      });
+
 
       app.listen(5001, () => {
           console.log('Server running on port 5001');
